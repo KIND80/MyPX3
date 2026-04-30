@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
+import type React from "react";
 import { Session } from "@supabase/supabase-js";
 import {
   Building2,
   Calendar,
+  Image,
   Loader2,
   Mail,
   MessageCircle,
@@ -12,7 +14,6 @@ import {
   Save,
   Sparkles,
   UserRound,
-  Image,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import LogoUpload from "../components/LogoUpload";
@@ -482,8 +483,8 @@ ${introText}
             <div className="mt-3">
               <LogoUpload
                 userId={session.user.id}
-                value={logoUrl}
-                onChange={setLogoUrl}
+                value={advisorPhotoUrl}
+                onChange={setAdvisorPhotoUrl}
               />
             </div>
           </BuilderCard>
@@ -557,7 +558,6 @@ ${introText}
               userId={session.user.id}
               value={logoUrl}
               onChange={setLogoUrl}
-              label="Logo / photo entreprise"
             />
 
             <Input
