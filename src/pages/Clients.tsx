@@ -67,6 +67,10 @@ type NewClientForm = {
   status: string;
   potential_amount: string;
   notes: string;
+
+  follow_up_title: string;
+  follow_up_note: string;
+  follow_up_date: string;
 };
 
 type WelcomeTemplate = {
@@ -90,6 +94,10 @@ const initialForm: NewClientForm = {
   status: "prospect",
   potential_amount: "",
   notes: "",
+
+  follow_up_title: "",
+  follow_up_note: "",
+  follow_up_date: "",
 };
 
 const calculateScore = (client: Client) => {
@@ -520,7 +528,19 @@ ${settings?.advisor_name || settings?.company_name || "MyPX"}
         client: insertedClient as Client,
         userId: session.user.id,
       });
-
+    
+      if (form.follow_up_date && form.follow_up_title) {
+        await supabase.from("follow_ups").insert({
+          user_id: session.user.id,
+          client_id: insertedClient.id,
+          title: form.follow_up_title,
+          note: form.follow_up_note || null,
+          due_date: form.follow_up_date,
+          status: "pending",
+          priority: "normal",
+        });
+      }
+    
       await sendWelcomeEmail(insertedClient as Client);
     }
 
@@ -872,7 +892,13 @@ ${settings?.advisor_name || settings?.company_name || "MyPX"}
                 value={form.potential_amount}
                 onChange={handleChange}
               />
-
+<FormInput
+  icon={<Sparkles size={15} />}
+  name="follow_up_title"
+  placeholder="Titre de relance"
+  value={form.follow_up_title}
+  onChange={handleChange}
+/>
               <textarea
                 name="notes"
                 placeholder="Notes, contexte, besoin, origine du contact..."
