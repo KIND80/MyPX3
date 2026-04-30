@@ -18,7 +18,6 @@ import {
   Trash2,
   UserPlus,
   Users,
-  Wand2,
   X,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
@@ -281,8 +280,9 @@ export default function Clients({ session }: ClientsProps) {
     return matchesSearch && matchesGroup && matchesStatus && matchesScore;
   });
 
-  const hotCount = clients.filter((client) => Number(client.score || 0) >= 100)
-    .length;
+  const hotCount = clients.filter(
+    (client) => Number(client.score || 0) >= 100
+  ).length;
 
   const aiProcessingCount = clients.filter(
     (client) => client.public_enrichment_status === "processing"
@@ -1097,7 +1097,9 @@ function FormInput({
   name: string;
   value: string;
   onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => void;
   placeholder: string;
   type?: string;
