@@ -125,8 +125,10 @@ export default function WelcomeBuilder({ session }: WelcomeBuilderProps) {
     if (onboarding.company_name) setCompanyName(onboarding.company_name);
     if (onboarding.company_email) setCompanyEmail(onboarding.company_email);
     if (onboarding.company_phone) setCompanyPhone(onboarding.company_phone);
-    if (onboarding.company_website) setCompanyWebsite(onboarding.company_website);
-    if (onboarding.company_address) setCompanyAddress(onboarding.company_address);
+    if (onboarding.company_website)
+      setCompanyWebsite(onboarding.company_website);
+    if (onboarding.company_address)
+      setCompanyAddress(onboarding.company_address);
     if (onboarding.logo_url) setLogoUrl(onboarding.logo_url);
     if (onboarding.main_color) setMainColor(onboarding.main_color);
 
@@ -237,17 +239,35 @@ ${introText}
                 <img src="${safeAdvisorPhoto}" alt="${advisorName}" style="width:64px;height:64px;object-fit:cover;border-radius:20px;background:#fff;border:1px solid #e5e7eb;" />
               </td>
               <td style="vertical-align:middle;">
-                <p style="margin:0;font-size:18px;font-weight:700;color:#0f172a;">${advisorName || companyName}</p>
+                <p style="margin:0;font-size:18px;font-weight:700;color:#0f172a;">${
+                  advisorName || companyName
+                }</p>
                 <p style="margin:5px 0 0;font-size:13px;color:#64748b;">${advisorRole}</p>
               </td>
             </tr>
           </table>
 
           <div style="margin-top:18px;font-size:14px;line-height:1.7;color:#334155;">
-            ${companyEmail ? `<div><strong>Email :</strong> ${companyEmail}</div>` : ""}
-            ${companyPhone ? `<div><strong>Téléphone :</strong> ${companyPhone}</div>` : ""}
-            ${companyWebsite ? `<div><strong>Site :</strong> ${companyWebsite}</div>` : ""}
-            ${companyAddress ? `<div><strong>Adresse :</strong> ${companyAddress}</div>` : ""}
+            ${
+              companyEmail
+                ? `<div><strong>Email :</strong> ${companyEmail}</div>`
+                : ""
+            }
+            ${
+              companyPhone
+                ? `<div><strong>Téléphone :</strong> ${companyPhone}</div>`
+                : ""
+            }
+            ${
+              companyWebsite
+                ? `<div><strong>Site :</strong> ${companyWebsite}</div>`
+                : ""
+            }
+            ${
+              companyAddress
+                ? `<div><strong>Adresse :</strong> ${companyAddress}</div>`
+                : ""
+            }
           </div>
         </div>
 
@@ -285,7 +305,9 @@ ${introText}
       <div style="padding:22px 34px;background:#0f172a;color:rgba(255,255,255,0.72);font-size:12px;line-height:1.6;">
         <strong style="color:#ffffff;">${companyName}</strong><br />
         ${footerText}<br />
-        ${companyEmail ? `${companyEmail}` : ""} ${companyPhone ? ` · ${companyPhone}` : ""}
+        ${companyEmail ? `${companyEmail}` : ""} ${
+      companyPhone ? ` · ${companyPhone}` : ""
+    }
         ${companyWebsite ? `<br />${companyWebsite}` : ""}
       </div>
     </div>
@@ -389,22 +411,29 @@ ${introText}
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[0.95fr_1.05fr]">
         <div className="space-y-6">
           <BuilderCard icon={<Mail size={17} />} title="Sujet & message">
-            <Input placeholder="Sujet de l’email" value={subject} onChange={setSubject} />
+            <Input
+              placeholder="Sujet de l’email"
+              value={subject}
+              onChange={setSubject}
+            />
 
             <div className="mt-4 rounded-2xl border border-dashed border-violet-200 bg-violet-50 px-4 py-3 text-xs font-bold text-slate-500">
               <span>Variables cliquables :</span>
-              {["{{first_name}}", "{{group_name}}", "{{city}}", "{{company}}"].map(
-                (variable) => (
-                  <button
-                    key={variable}
-                    type="button"
-                    onClick={() => insertVariable(variable)}
-                    className="ml-2 mt-2 rounded-full border border-violet-100 bg-white px-3 py-1 font-black text-violet-700 transition hover:bg-violet-100"
-                  >
-                    {variable}
-                  </button>
-                )
-              )}
+              {[
+                "{{first_name}}",
+                "{{group_name}}",
+                "{{city}}",
+                "{{company}}",
+              ].map((variable) => (
+                <button
+                  key={variable}
+                  type="button"
+                  onClick={() => insertVariable(variable)}
+                  className="ml-2 mt-2 rounded-full border border-violet-100 bg-white px-3 py-1 font-black text-violet-700 transition hover:bg-violet-100"
+                >
+                  {variable}
+                </button>
+              ))}
             </div>
 
             <Input
@@ -453,30 +482,56 @@ ${introText}
             <div className="mt-3">
               <LogoUpload
                 userId={session.user.id}
-                value={advisorPhotoUrl}
-                onChange={setAdvisorPhotoUrl}
-                label="Photo du conseiller"
+                value={logoUrl}
+                onChange={setLogoUrl}
               />
             </div>
           </BuilderCard>
 
           <BuilderCard icon={<Building2 size={17} />} title="Carte entreprise">
             <div className="grid grid-cols-1 gap-3">
-              <Input value={companyName} onChange={setCompanyName} placeholder="Nom entreprise" />
+              <Input
+                value={companyName}
+                onChange={setCompanyName}
+                placeholder="Nom entreprise"
+              />
               <Input
                 value={companyTagline}
                 onChange={setCompanyTagline}
                 placeholder="Phrase de présentation"
               />
-              <Input value={companyEmail} onChange={setCompanyEmail} placeholder="Email" />
-              <Input value={companyPhone} onChange={setCompanyPhone} placeholder="Téléphone" />
-              <Input value={companyWebsite} onChange={setCompanyWebsite} placeholder="Site web" />
-              <Input value={companyAddress} onChange={setCompanyAddress} placeholder="Adresse" />
+              <Input
+                value={companyEmail}
+                onChange={setCompanyEmail}
+                placeholder="Email"
+              />
+              <Input
+                value={companyPhone}
+                onChange={setCompanyPhone}
+                placeholder="Téléphone"
+              />
+              <Input
+                value={companyWebsite}
+                onChange={setCompanyWebsite}
+                placeholder="Site web"
+              />
+              <Input
+                value={companyAddress}
+                onChange={setCompanyAddress}
+                placeholder="Adresse"
+              />
             </div>
           </BuilderCard>
 
-          <BuilderCard icon={<MousePointerClick size={17} />} title="Boutons d’action">
-            <Input value={ctaText} onChange={setCtaText} placeholder="Texte du bouton email" />
+          <BuilderCard
+            icon={<MousePointerClick size={17} />}
+            title="Boutons d’action"
+          >
+            <Input
+              value={ctaText}
+              onChange={setCtaText}
+              placeholder="Texte du bouton email"
+            />
 
             <div className="mt-3 flex items-center gap-2">
               <MessageCircle size={16} className="text-slate-400" />
